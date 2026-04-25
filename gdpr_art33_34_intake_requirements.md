@@ -1,16 +1,10 @@
 # GDPR Art. 33 & 34 Intake Requirements
-# Based on real supervisory authority reporting form (BayLDA)
+# Based on real supervisory authority reporting structure (BayLDA-aligned)
 
 ## Purpose
 
-This document defines the legally required data fields
+This document defines required data fields
 for reporting personal data breaches under GDPR Articles 33 and 34.
-
-This structure is based on:
-
-- GDPR Article 33 (Authority Notification)
-- GDPR Article 34 (Data Subject Notification)
-- Real supervisory authority reporting form (Bavaria, Germany)
 
 Used for:
 
@@ -21,17 +15,36 @@ Used for:
 
 ---
 
-# SECTION 1 — Report Type
+# SECTION 1 — Report Classification
 
-## report_type
+## breach_type
+
+Type: multi-select  
+Required: yes  
+
+Values:
+
+- device_loss
+- email_misdirected
+- document_loss
+- hacking_attack
+- phishing
+- malware
+- unauthorized_access
+- other
+
+---
+
+## report_completion_type
 
 Type: select  
 Required: yes  
 
 Values:
 
-- initial_report
-- follow_up_report
+- initial
+- update
+- final
 
 ---
 
@@ -42,7 +55,7 @@ Required: conditional
 
 Required if:
 
-report_type = follow_up_report
+report_completion_type = update OR final
 
 ---
 
@@ -65,6 +78,15 @@ Includes:
 - street
 - postal_code
 - city
+
+---
+
+## organisation_email
+
+Type: email  
+Required: yes  
+
+General organisation contact email.
 
 ---
 
@@ -150,10 +172,6 @@ Examples:
 Type: boolean  
 Required: yes  
 
-If TRUE:
-
-→ reporter becomes contact
-
 ---
 
 ## contact_notification_method
@@ -181,8 +199,6 @@ Required: optional
 
 Type: datetime  
 Required: optional  
-
-If known.
 
 ---
 
@@ -215,7 +231,7 @@ report submitted > 72 hours
 Type: text  
 Required: yes  
 
-Detailed description of incident.
+Detailed description.
 
 ---
 
@@ -223,8 +239,6 @@ Detailed description of incident.
 
 Type: boolean  
 Required: yes  
-
-Was a processor involved?
 
 ---
 
@@ -235,16 +249,12 @@ Was a processor involved?
 Type: number  
 Required: yes  
 
-Approximate number of individuals affected.
-
 ---
 
 ## affected_record_count
 
 Type: number  
 Required: optional  
-
-Approximate number of records.
 
 ---
 
@@ -304,7 +314,7 @@ Values:
 
 ---
 
-# SECTION 10 — Breach Effects (CIA Triad)
+# SECTION 10 — Breach Effects
 
 ## breach_effect_types
 
@@ -376,7 +386,47 @@ risk_level = high
 
 ---
 
-# SECTION 13 — Mitigation Measures
+# SECTION 13 — Cyberattack / Technical Attack Details
+
+## attack_phase
+
+Type: select  
+Required: optional  
+
+Values:
+
+- preparation
+- active
+- contained
+- resolved
+
+---
+
+## infection_vector
+
+Type: select  
+Required: optional  
+
+Values:
+
+- email_attachment
+- malicious_link
+- download
+- hacking
+- unknown
+
+---
+
+## malware_name
+
+Type: text  
+Required: optional  
+
+Name of malware if known.
+
+---
+
+# SECTION 14 — Mitigation Measures
 
 ## measures_taken
 
@@ -385,16 +435,14 @@ Required: yes
 
 Actions already performed.
 
-Examples:
-
-- system_isolated
-- accounts_locked
-- passwords_reset
-- network_blocked
-
 ---
 
-# SECTION 14 — Additional Authority Information
+## additional_information
+
+Type: text  
+Required: optional  
+
+---
 
 ## external_authorities_notified
 
@@ -406,7 +454,6 @@ Examples:
 - police
 - cybersecurity_agency
 - regulator
-
 ---
 
 # SECTION 15 — Attachments
@@ -423,15 +470,9 @@ Accepted formats:
 - PNG
 - ZIP
 
-Examples:
-
-- logs
-- screenshots
-- reports
-
 ---
 
-# SECTION 16 — Follow-Up Reports
+# SECTION 16 — Follow-Up Information
 
 ## follow_up_information
 
@@ -440,7 +481,7 @@ Required: conditional
 
 Required if:
 
-report_type = follow_up_report
+report_completion_type = update OR final
 
 ---
 
