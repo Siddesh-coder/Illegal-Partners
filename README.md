@@ -8,7 +8,7 @@ Narrow down the problem and describe it: Explain what you solve
 
 Tasks:
 
-Liam:
+Liam: Erarbeite das Business-Modell (20% der Punkte)
 Sid:
 Jacob:
 Leo: Research GDPR based approach when a data breach occured
