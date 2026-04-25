@@ -1,109 +1,385 @@
-# GDPR Art. 33 & 34 Breach Notification Requirements
+# GDPR Art. 33 & 34 Intake Requirements
+# Based on real supervisory authority reporting form (BayLDA)
 
 ## Purpose
 
-This file defines the mandatory legal requirements for GDPR breach notifications.
+This document defines the legally required data fields
+for reporting personal data breaches under GDPR Articles 33 and 34.
 
-It serves as the legal foundation for:
+This structure is based on:
+
+- GDPR Article 33 (Authority Notification)
+- GDPR Article 34 (Data Subject Notification)
+- Real supervisory authority reporting form (Bavaria, Germany)
+
+Used for:
 
 - Incident Intake Form
 - Risk Assessment Engine
-- Notification Generation
-- Audit Trail Documentation
-
-Based on:
-
-- GDPR Article 33 (Notification to Supervisory Authority)
-- GDPR Article 34 (Notification to Data Subjects)
+- Notification Generator
+- Audit Trail System
 
 ---
 
-# Article 33 — Supervisory Authority Notification
+# SECTION 1 — Report Type
 
-## Mandatory Information (Legal Requirement)
+## report_type
 
-The following information MUST be collected.
+Type: select  
+Required: yes  
 
-These fields are required by law.
+Values:
 
-### Breach Description
+- initial_report
+- follow_up_report
 
-Field ID: breach_description  
+---
+
+## initial_report_reference_id
+
+Type: text  
+Required: conditional  
+
+Required if:
+
+report_type = follow_up_report
+
+---
+
+# SECTION 2 — Responsible Organisation
+
+## organisation_name
+
 Type: text  
 Required: yes  
 
-Description of the nature of the personal data breach.
+---
+
+## organisation_address
+
+Type: object  
+Required: yes  
+
+Includes:
+
+- street
+- postal_code
+- city
 
 ---
 
-### Data Categories
+## organisation_website
 
-Field ID: data_categories  
-Type: multi-select  
+Type: url  
+Required: optional  
+
+---
+
+## kritis_operator
+
+Type: boolean  
+Required: optional  
+
+Indicates KRITIS status.
+
+---
+
+# SECTION 3 — Reporting Person
+
+## reporter_salutation
+
+Type: select  
+Required: yes  
+
+Values:
+
+- mr
+- ms
+- diverse
+- none
+
+---
+
+## reporter_first_name
+
+Type: text  
+Required: yes  
+
+---
+
+## reporter_last_name
+
+Type: text  
+Required: yes  
+
+---
+
+## reporter_email
+
+Type: email  
+Required: yes  
+
+---
+
+## reporter_phone
+
+Type: phone  
+Required: yes  
+
+---
+
+## reporter_role
+
+Type: select  
 Required: yes  
 
 Examples:
 
-- Names
-- Email addresses
-- Financial data
-- Health data
-- Login credentials
-- Other personal data
+- DPO
+- IT Security
+- Legal
+- Management
+- Other
 
 ---
 
-### Number of Affected Data Subjects
+# SECTION 4 — Contact Person
 
-Field ID: affected_subject_count  
-Type: number or range  
+## contact_is_reporter
+
+Type: boolean  
+Required: yes  
+
+If TRUE:
+
+→ reporter becomes contact
+
+---
+
+## contact_notification_method
+
+Type: select  
+Required: yes  
+
+Values:
+
+- email
+- secure_email
+
+---
+
+## auto_confirmation_requested
+
+Type: boolean  
+Required: optional  
+
+---
+
+# SECTION 5 — Incident Timeline
+
+## incident_time
+
+Type: datetime  
+Required: optional  
+
+If known.
+
+---
+
+## detection_time
+
+Type: datetime  
+Required: yes  
+
+Used for:
+
+→ 72-hour deadline calculation
+
+---
+
+## delay_justification
+
+Type: text  
+Required: conditional  
+
+Required if:
+
+report submitted > 72 hours
+
+---
+
+# SECTION 6 — Incident Description
+
+## breach_description
+
+Type: text  
+Required: yes  
+
+Detailed description of incident.
+
+---
+
+## processor_involved
+
+Type: boolean  
+Required: yes  
+
+Was a processor involved?
+
+---
+
+# SECTION 7 — Affected Scope
+
+## affected_subject_count
+
+Type: number  
 Required: yes  
 
 Approximate number of individuals affected.
 
 ---
 
-### Number of Affected Data Records
+## affected_record_count
 
-Field ID: affected_record_count  
-Type: number or range  
-Required: yes  
+Type: number  
+Required: optional  
 
-Approximate number of records affected.
-
----
-
-### Contact Details
-
-Field ID: contact_point  
-Type: object  
-Required: yes  
-
-Includes:
-
-- Name of Data Protection Officer (DPO)
-- Email
-- Phone number
+Approximate number of records.
 
 ---
 
-### Likely Consequences
+# SECTION 8 — Data Categories
 
-Field ID: likely_consequences  
-Type: text  
+## data_categories
+
+Type: multi-select  
 Required: yes  
 
-Examples:
+Values:
 
-- Identity theft risk
-- Financial loss
-- Reputational damage
+- health_data
+- financial_data
+- economic_data
+- religious_data
+- union_membership
+- ethnic_origin
+- sexuality
+- political_opinion
+- professional_secret
+- biometric_data
+- location_data
+- photos_videos
+- email_addresses
+- postal_addresses
+- passwords
+- criminal_data
+- birth_date
+- id_number
+- tax_number
+- other_identifiers
+- other_documents
+- other_personal_data
+- unknown
 
 ---
 
-### Measures Taken
+# SECTION 9 — Categories of Affected Persons
 
-Field ID: measures_taken  
+## subject_categories
+
+Type: multi-select  
+Required: yes  
+
+Values:
+
+- employees
+- members
+- users
+- customers
+- politicians
+- patients
+- children
+- public_figures
+- other
+
+---
+
+# SECTION 10 — Breach Effects (CIA Triad)
+
+## breach_effect_types
+
+Type: multi-select  
+Required: yes  
+
+Values:
+
+- confidentiality_loss
+- availability_loss
+- integrity_loss
+
+---
+
+# SECTION 11 — Likely Consequences
+
+## likely_consequences
+
+Type: multi-select  
+Required: yes  
+
+Values:
+
+- discrimination
+- identity_theft
+- life_threat
+- financial_loss
+- reputational_damage
+- livelihood_loss
+- embarrassment
+- job_loss
+- confidentiality_breach
+- de_pseudonymization
+- social_disadvantage
+- economic_disadvantage
+- other
+
+---
+
+# SECTION 12 — Risk Assessment
+
+## risk_level
+
+Type: select  
+Required: yes  
+
+Values:
+
+- low
+- medium
+- high
+
+Rules:
+
+LOW → No notification required  
+MEDIUM → Notify authority  
+HIGH → Notify authority + subjects
+
+---
+
+## subjects_notified
+
+Type: boolean  
+Required: conditional  
+
+Required if:
+
+risk_level = high
+
+---
+
+# SECTION 13 — Mitigation Measures
+
+## measures_taken
+
 Type: text  
 Required: yes  
 
@@ -111,132 +387,94 @@ Actions already performed.
 
 Examples:
 
-- System isolated
-- Password reset
-- Access revoked
+- system_isolated
+- accounts_locked
+- passwords_reset
+- network_blocked
 
 ---
 
-### Planned Measures
+# SECTION 14 — Additional Authority Information
 
-Field ID: measures_planned  
+## external_authorities_notified
+
 Type: text  
-Required: yes  
-
-Future actions to mitigate risks.
+Required: optional  
 
 Examples:
 
-- Forensic investigation
-- Security patching
-- User notification
+- police
+- cybersecurity_agency
+- regulator
 
 ---
 
-# Additional Legal Constraints
+# SECTION 15 — Attachments
 
-## 72-Hour Deadline
+## evidence_files
 
-Field ID: breach_detection_time  
-Type: datetime  
-Required: yes  
+Type: file_upload  
+Required: optional  
 
-Used to calculate:
+Accepted formats:
 
-- Reporting deadline
+- PDF
+- JPEG
+- PNG
+- ZIP
 
-If notification is late:
+Examples:
 
-Field ID: delay_justification  
-Required: conditional
+- logs
+- screenshots
+- reports
 
 ---
 
-## Audit Trail Requirement
+# SECTION 16 — Follow-Up Reports
 
-All incidents MUST be documented.
+## follow_up_information
+
+Type: text  
+Required: conditional  
+
+Required if:
+
+report_type = follow_up_report
+
+---
+
+# SYSTEM OUTPUT REQUIREMENTS
+
+The system must generate:
+
+- authority_notification_required
+- subject_notification_required
+- reporting_deadline_timer
+- risk_summary
+- incident_report_document
+
+---
+
+# AUDIT TRAIL REQUIREMENTS
+
+All incidents must be logged.
 
 Required metadata:
 
-- Incident ID
-- Timestamp history
-- User actions
-- Status changes
+- incident_id
+- timestamps
+- user_actions
+- status_changes
+- notification_history
 
 ---
 
-# Article 34 — Notification to Data Subjects
+# LEGAL NOTES
 
-## High Risk Decision
+Notifications must be submitted:
 
-This determines whether affected individuals must be notified.
+→ Within 72 hours after detection  
+→ Unless risk is negligible
 
-Field ID: high_risk_flag  
-Type: boolean  
-Required: yes  
-
-Trigger condition:
-
-If HIGH RISK = TRUE  
-→ Notify data subjects
-
----
-
-## Required Content for Data Subject Notification
-
-If high risk exists:
-
-The following information must be included:
-
-- Breach description
-- Contact point
-- Likely consequences
-- Remedial measures
-
-Language requirement:
-
-Must be:
-
-- clear
-- simple
-- understandable
-
----
-
-# Risk Assessment Inputs (Decision Engine)
-
-These fields support the high-risk evaluation.
-
-Not directly required by law, but required for automation.
-
-Field IDs:
-
-- data_sensitivity_level
-- encryption_status
-- unauthorized_access_confirmed
-- potential_identity_theft
-- financial_damage_possible
-
----
-
-# Output Decisions
-
-The system must support the following outputs:
-
-- NO_NOTIFICATION_REQUIRED
-- NOTIFY_AUTHORITY
-- NOTIFY_AUTHORITY_AND_SUBJECTS
-
----
-
-# Notes for Developers
-
-This file defines:
-
-- Required intake fields
-- Legal logic dependencies
-- Notification triggers
-
-Do NOT remove mandatory fields.
-
-These fields are legally required under GDPR Articles 33 and 34.
+All processing must be documented.
