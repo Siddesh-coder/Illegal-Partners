@@ -1,215 +1,40 @@
-# GDPR Art. 33 & 34 Intake Requirements
-# Based on real supervisory authority reporting structure (BayLDA-aligned)
+# GDPR Articles 33 & 34 — Legal Notification Requirements
 
 ## Purpose
 
-This document defines required data fields
-for reporting personal data breaches under GDPR Articles 33 and 34.
+This document defines the mandatory information that must be collected
+under GDPR Articles 33 and 34 in case of a personal data breach.
 
-Used for:
+This file contains ONLY legally required data elements.
 
-- Incident Intake Form
-- Risk Assessment Engine
-- Notification Generator
-- Audit Trail System
+It serves as the legal foundation for:
 
----
+- Incident intake
+- Risk evaluation
+- Notification preparation
+- Documentation compliance
 
-# SECTION 1 — Report Classification
+Based on:
 
-## breach_type
-
-Type: multi-select  
-Required: yes  
-
-Values:
-
-- device_loss
-- email_misdirected
-- document_loss
-- hacking_attack
-- phishing
-- malware
-- unauthorized_access
-- other
+- GDPR Article 33 — Notification to Supervisory Authority
+- GDPR Article 34 — Notification to Data Subjects
 
 ---
 
-## report_completion_type
-
-Type: select  
-Required: yes  
-
-Values:
-
-- initial
-- update
-- final
-
----
-
-## initial_report_reference_id
-
-Type: text  
-Required: conditional  
-
-Required if:
-
-report_completion_type = update OR final
-
----
-
-# SECTION 2 — Responsible Organisation
-
-## organisation_name
-
-Type: text  
-Required: yes  
-
----
-
-## organisation_address
-
-Type: object  
-Required: yes  
-
-Includes:
-
-- street
-- postal_code
-- city
-
----
-
-## organisation_email
-
-Type: email  
-Required: yes  
-
-General organisation contact email.
-
----
-
-## organisation_website
-
-Type: url  
-Required: optional  
-
----
-
-## kritis_operator
-
-Type: boolean  
-Required: optional  
-
-Indicates KRITIS status.
-
----
-
-# SECTION 3 — Reporting Person
-
-## reporter_salutation
-
-Type: select  
-Required: yes  
-
-Values:
-
-- mr
-- ms
-- diverse
-- none
-
----
-
-## reporter_first_name
-
-Type: text  
-Required: yes  
-
----
-
-## reporter_last_name
-
-Type: text  
-Required: yes  
-
----
-
-## reporter_email
-
-Type: email  
-Required: yes  
-
----
-
-## reporter_phone
-
-Type: phone  
-Required: yes  
-
----
-
-## reporter_role
-
-Type: select  
-Required: yes  
-
-Examples:
-
-- DPO
-- IT Security
-- Legal
-- Management
-- Other
-
----
-
-# SECTION 4 — Contact Person
-
-## contact_is_reporter
-
-Type: boolean  
-Required: yes  
-
----
-
-## contact_notification_method
-
-Type: select  
-Required: yes  
-
-Values:
-
-- email
-- secure_email
-
----
-
-## auto_confirmation_requested
-
-Type: boolean  
-Required: optional  
-
----
-
-# SECTION 5 — Incident Timeline
-
-## incident_time
-
-Type: datetime  
-Required: optional  
-
----
+# SECTION 1 — Awareness Timing (Art. 33(1))
 
 ## detection_time
 
 Type: datetime  
 Required: yes  
 
-Used for:
+Description:
 
-→ 72-hour deadline calculation
+Timestamp when the controller became aware of the personal data breach.
+
+Legal basis:
+
+Art. 33(1) — notification within 72 hours.
 
 ---
 
@@ -218,36 +43,75 @@ Used for:
 Type: text  
 Required: conditional  
 
-Required if:
+Description:
 
-report submitted > 72 hours
+Reason for delay if notification occurs later than 72 hours.
+
+Legal basis:
+
+Art. 33(1) — justification required if deadline exceeded.
 
 ---
 
-# SECTION 6 — Incident Description
+# SECTION 2 — Nature of the Breach (Art. 33(3)(a))
 
 ## breach_description
 
 Type: text  
 Required: yes  
 
-Detailed description.
+Description:
+
+Description of the nature of the personal data breach.
+
+Legal basis:
+
+Art. 33(3)(a)
 
 ---
 
-## processor_involved
+## data_categories
 
-Type: boolean  
+Type: multi-select  
 Required: yes  
 
+Description:
+
+Categories of personal data affected.
+
+Legal basis:
+
+Art. 33(3)(a)
+
 ---
 
-# SECTION 7 — Affected Scope
+## subject_categories
+
+Type: multi-select  
+Required: optional  
+
+Description:
+
+Categories of affected individuals.
+
+Legal basis:
+
+Art. 33(3)(a)
+
+---
 
 ## affected_subject_count
 
 Type: number  
 Required: yes  
+
+Description:
+
+Approximate number of affected data subjects.
+
+Legal basis:
+
+Art. 33(3)(a)
 
 ---
 
@@ -256,105 +120,113 @@ Required: yes
 Type: number  
 Required: optional  
 
+Description:
+
+Approximate number of affected personal data records.
+
+Legal basis:
+
+Art. 33(3)(a)
+
 ---
 
-# SECTION 8 — Data Categories
+# SECTION 3 — Contact Information (Art. 33(3)(b))
 
-## data_categories
+## contact_person_name
 
-Type: multi-select  
+Type: text  
 Required: yes  
 
-Values:
+Description:
 
-- health_data
-- financial_data
-- economic_data
-- religious_data
-- union_membership
-- ethnic_origin
-- sexuality
-- political_opinion
-- professional_secret
-- biometric_data
-- location_data
-- photos_videos
-- email_addresses
-- postal_addresses
-- passwords
-- criminal_data
-- birth_date
-- id_number
-- tax_number
-- other_identifiers
-- other_documents
-- other_personal_data
-- unknown
+Name of the Data Protection Officer or other contact point.
+
+Legal basis:
+
+Art. 33(3)(b)
 
 ---
 
-# SECTION 9 — Categories of Affected Persons
+## contact_person_email
 
-## subject_categories
-
-Type: multi-select  
+Type: email  
 Required: yes  
 
-Values:
+Description:
 
-- employees
-- members
-- users
-- customers
-- politicians
-- patients
-- children
-- public_figures
-- other
+Email address of contact person.
+
+Legal basis:
+
+Art. 33(3)(b)
 
 ---
 
-# SECTION 10 — Breach Effects
+## contact_person_phone
 
-## breach_effect_types
+Type: phone  
+Required: optional  
 
-Type: multi-select  
-Required: yes  
+Description:
 
-Values:
+Phone number of contact person.
 
-- confidentiality_loss
-- availability_loss
-- integrity_loss
+Legal basis:
+
+Art. 33(3)(b)
 
 ---
 
-# SECTION 11 — Likely Consequences
+# SECTION 4 — Likely Consequences (Art. 33(3)(c))
 
 ## likely_consequences
 
-Type: multi-select  
+Type: text  
 Required: yes  
 
-Values:
+Description:
 
-- discrimination
-- identity_theft
-- life_threat
-- financial_loss
-- reputational_damage
-- livelihood_loss
-- embarrassment
-- job_loss
-- confidentiality_breach
-- de_pseudonymization
-- social_disadvantage
-- economic_disadvantage
-- other
+Description of likely consequences of the breach.
+
+Legal basis:
+
+Art. 33(3)(c)
 
 ---
 
-# SECTION 12 — Risk Assessment
+# SECTION 5 — Measures Taken (Art. 33(3)(d))
+
+## measures_taken
+
+Type: text  
+Required: yes  
+
+Description:
+
+Measures already taken to address the breach.
+
+Legal basis:
+
+Art. 33(3)(d)
+
+---
+
+## mitigation_measures
+
+Type: text  
+Required: optional  
+
+Description:
+
+Measures taken to mitigate possible adverse effects.
+
+Legal basis:
+
+Art. 33(3)(d)
+
+---
+
+# SECTION 6 — Risk Assessment (Art. 33(1), Art. 34)
 
 ## risk_level
 
@@ -363,159 +235,74 @@ Required: yes
 
 Values:
 
-- low
-- medium
-- high
+- no_risk
+- risk
+- high_risk
 
-Rules:
+Description:
 
-LOW → No notification required  
-MEDIUM → Notify authority  
-HIGH → Notify authority + subjects
+Assessment whether the breach poses a risk to the rights and freedoms of natural persons.
+
+Legal basis:
+
+Art. 33(1)  
+Art. 34(1)
 
 ---
+
+# SECTION 7 — Data Subject Notification (Art. 34)
 
 ## subjects_notified
 
 Type: boolean  
 Required: conditional  
 
+Description:
+
+Indicates whether affected individuals have been informed.
+
 Required if:
 
-risk_level = high
+risk_level = high_risk
+
+Legal basis:
+
+Art. 34(1)
 
 ---
 
-# SECTION 13 — Cyberattack / Technical Attack Details
+# SECTION 8 — Breach Documentation (Art. 33(5))
 
-## attack_phase
-
-Type: select  
-Required: optional  
-
-Values:
-
-- preparation
-- active
-- contained
-- resolved
-
----
-
-## infection_vector
-
-Type: select  
-Required: optional  
-
-Values:
-
-- email_attachment
-- malicious_link
-- download
-- hacking
-- unknown
-
----
-
-## malware_name
-
-Type: text  
-Required: optional  
-
-Name of malware if known.
-
----
-
-# SECTION 14 — Mitigation Measures
-
-## measures_taken
+## incident_documentation
 
 Type: text  
 Required: yes  
 
-Actions already performed.
+Description:
+
+Documentation of:
+
+- facts relating to the breach
+- its effects
+- remedial actions taken
+
+Legal basis:
+
+Art. 33(5)
+
+Purpose:
+
+Allows supervisory authority to verify compliance.
 
 ---
 
-## additional_information
+# LEGAL SUMMARY
 
-Type: text  
-Required: optional  
+Under GDPR:
 
----
+A personal data breach must be reported to the supervisory authority
+within 72 hours unless the breach is unlikely to result in risk.
 
-## external_authorities_notified
+If a high risk exists, affected individuals must also be notified.
 
-Type: text  
-Required: optional  
-
-Examples:
-
-- police
-- cybersecurity_agency
-- regulator
----
-
-# SECTION 15 — Attachments
-
-## evidence_files
-
-Type: file_upload  
-Required: optional  
-
-Accepted formats:
-
-- PDF
-- JPEG
-- PNG
-- ZIP
-
----
-
-# SECTION 16 — Follow-Up Information
-
-## follow_up_information
-
-Type: text  
-Required: conditional  
-
-Required if:
-
-report_completion_type = update OR final
-
----
-
-# SYSTEM OUTPUT REQUIREMENTS
-
-The system must generate:
-
-- authority_notification_required
-- subject_notification_required
-- reporting_deadline_timer
-- risk_summary
-- incident_report_document
-
----
-
-# AUDIT TRAIL REQUIREMENTS
-
-All incidents must be logged.
-
-Required metadata:
-
-- incident_id
-- timestamps
-- user_actions
-- status_changes
-- notification_history
-
----
-
-# LEGAL NOTES
-
-Notifications must be submitted:
-
-→ Within 72 hours after detection  
-→ Unless risk is negligible
-
-All processing must be documented.
+All breaches must be documented regardless of notification obligation.
