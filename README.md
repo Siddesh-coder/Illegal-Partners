@@ -12,3 +12,5 @@ Liam:
 Sid:
 Jacob:
 Leo: Research GDPR based approach when a data breach occured
+  - Art. 33 DSGVO Meldepflicht 
+  - Art. 34 DSGVO Benachrichtigung betroffener Personen
